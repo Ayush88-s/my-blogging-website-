@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush's Journal - Ideas & Stories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --surface: #ffffff;
+            --text-main: #1f2421;
+            --text-muted: #6b7280;
+            --primary: #d97706;
+            --primary-hover: #b45309;
+            --border: #e5e7eb;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            --radius: 14px;
+        }
+
+        body.dark {
+            --bg-color: #121417;
+            --surface: #1a1e24;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --border: #2a313d;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.dark header {
+            background: rgba(26, 30, 36, 0.85);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 7px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            border-color: var(--primary);
+        }
+
+        /* Hero Banner */
+        .hero {
+            padding: 90px 20px 60px;
+            text-align: center;
+            max-width: 780px;
+            margin: auto;
+        }
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            letter-spacing: -0.8px;
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 19px;
+            margin-bottom: 30px;
+        }
+        .hero-btn {
+            background: var(--text-main);
+            color: var(--surface);
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .hero-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Controls: Search & Tags */
+        .controls-wrapper {
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        #searchBox {
+            width: 100%;
+            max-width: 520px;
+            padding: 14px 22px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background: var(--surface);
+            color: var(--text-main);
+            font-size: 15px;
+            outline: none;
+            box-shadow: var(--card-shadow);
+        }
+        #searchBox:focus {
+            border-color: var(--primary);
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .categories button {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .categories button:hover, .categories button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Grid */
+        .blog-section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 10px 20px 80px;
+        }
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Clean Card Design */
+        .blog-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px -8px rgba(0, 0, 0, 0.08);
+        }
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .blog-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .category {
+            align-self: flex-start;
+            font-size: 11.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--primary);
+            background: rgba(217, 119, 6, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+        .blog-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+        .blog-content p {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .blog-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+        .read-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .card-actions button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 13.5px;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .card-actions button:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-main);
+        }
+
+        /* Post Form */
+        .form-section {
+            max-width: 650px;
+            margin: 40px auto 90px;
+            padding: 40px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+        }
+        .form-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        #blogForm input, #blogForm select, #blogForm textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-main);
+            font-size: 14.5px;
+            outline: none;
+        }
+        #blogForm textarea {
+            height: 130px;
+            resize: vertical;
+        }
+        #blogForm button {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #blogForm button:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: var(--surface);
+            color: var(--text-main);
+            width: 90%;
+            max-width: 680px;
+            margin: 8vh auto;
+            padding: 40px;
+            border-radius: var(--radius);
+            position: relative;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        #modalTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            margin-bottom: 16px;
+        }
+        #modalText {
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 650px) {
+            header {
+                padding: 16px 5%;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .hero h2 {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <a href="#home" class="logo">Ayush<span>.</span></a>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#blogs">Articles</a>
+            <a href="#addBlog">Write</a>
+            <button class="theme-toggle" onclick="toggleDarkMode()">Theme</button>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <h2>Thoughts, stories, and curated perspectives.</h2>
+        <p>A simple space dedicated to exploring technology, games, and journeys.</p>
+        <button class="hero-btn" onclick="scrollToBlogs()">Start Reading</button>
+    </section>
+
+    <!-- Controls -->
+    <div class="controls-wrapper">
+        <input type="text" id="searchBox" placeholder="Search essays and articles..." onkeyup="searchBlogs()">
+        <div class="categories">
+            <button class="active" onclick="filterBlogs('All', this)">All</button>
+            <button onclick="filterBlogs('Technology', this)">Technology</button>
+            <button onclick="filterBlogs('Education', this)">Education</button>
+            <button onclick="filterBlogs('Gaming', this)">Gaming</button>
+            <button onclick="filterBlogs('Travel', this)">Travel</button>
+        </div>
+    </div>
+
+    <!-- Articles -->
+    <section class="blog-section" id="blogs">
+        <div class="blog-container" id="blogContainer">
+            <!-- Card 1 -->
+            <div class="blog-card" data-category="Technology">
+                <img class="blog-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Tech">
+                <div class="blog-content">
+                    <span class="category">Technology</span>
+                    <h3>Introduction to Modern Technology</h3>
+                    <p>How recent breakthroughs are reshaping tools, learning paradigms, and modern workflows.</p>
+                    <div class="blog-footer">
+                        <button class="read-btn" onclick="readBlog('Introduction to Modern Technology', 'Technology is an important part of modern life. It helps us communicate, learn new skills, work efficiently and solve different problems. Computers, smartphones, artificial intelligence and the internet are examples of modern technology.')">Read Essay &rarr;</button>
+                        <div class="card-actions">
+                            <button onclick="likeBlog(this)">♡ 0</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="blog-card" data-category="Education">
+                <img class="blog-image" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b" alt="Education">
+                <div class="blog-content">
+                    <span class="category">Education</span>
+                    <h3>The Enduring Value of Education</h3>
+                    <p>Structured learning cultivates clarity, analytical thinking, and long-term agency.</p>
+                    <div class="blog-footer">
+                        <button class="read-btn" onclick="readBlog('The Enduring Value of Education', 'Education plays an important role in personal and social development. It provides knowledge, improves problem-solving skills and helps people build a better career. Learning is a continuous process.')">Read Essay &rarr;</button>
+                        <div class="card-actions">
+                            <button onclick="likeBlog(this)">♡ 0</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="blog-card" data-category="Gaming">
+                <img class="blog-image" src="https://images.unsplash.com/photo-1542751371-adc38448a05e" alt="Gaming">
+                <div class="blog-content">
+                    <span class="category">Gaming</span>
+                    <h3>Interactive Worlds & Storytelling</h3>
+                    <p>Exploring how real-time simulation and digital playgrounds sharpen decision-making.</p>
+                    <div class="blog-footer">
+                        <button class="read-btn" onclick="readBlog('Interactive Worlds & Storytelling', 'Video games provide entertainment and can also improve skills such as problem solving, teamwork and decision making. Modern games are available on computers, consoles and mobile devices.')">Read Essay &rarr;</button>
+                        <div class="card-actions">
+                            <button onclick="likeBlog(this)">♡ 0</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="blog-card" data-category="Travel">
+                <img class="blog-image" src="https://images.unsplash.com/photo-1500534623283-312aade485b7" alt="Travel">
+                <div class="blog-content">
+                    <span class="category">Travel</span>
+                    <h3>The Perspective of Distance</h3>
+                    <p>Gaining fresh insights and cultural patience through slow, purposeful travel.</p>
+                    <div class="blog-footer">
+                        <button class="read-btn" onclick="readBlog('The Perspective of Distance', 'Travelling gives people an opportunity to explore new places and meet different people. It can provide new experiences, improve understanding of different cultures and create memorable moments.')">Read Essay &rarr;</button>
+                        <div class="card-actions">
+                            <button onclick="likeBlog(this)">♡ 0</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Post Section -->
+    <section class="form-section" id="addBlog">
+        <h2>Write an Article</h2>
+        <form id="blogForm">
+            <input type="text" id="blogTitle" placeholder="Title" required>
+            <select id="blogCategory" required>
+                <option value="">Choose category...</option>
+                <option value="Technology">Technology</option>
+                <option value="Education">Education</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Travel">Travel</option>
+            </select>
+            <input type="text" id="blogImage" placeholder="Cover Image URL (optional)">
+            <textarea id="blogDescription" placeholder="Draft your content..." required></textarea>
+            <button type="submit">Publish to Journal</button>
+        </form>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="blogModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalText"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Ayush's Journal. Built with HTML, CSS & Vanilla JS.</p>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        function scrollToBlogs() {
+            document.getElementById("blogs").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function searchBlogs() {
+            const query = document.getElementById("searchBox").value.toLowerCase();
+            document.querySelectorAll(".blog-card").forEach(card => {
+                const title = card.querySelector("h3").innerText.toLowerCase();
+                const desc = card.querySelector("p").innerText.toLowerCase();
+                card.style.display = (title.includes(query) || desc.includes(query)) ? "flex" : "none";
+            });
+        }
+
+        function filterBlogs(category, btn) {
+            document.querySelectorAll(".categories button").forEach(b => b.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+
+            document.querySelectorAll(".blog-card").forEach(card => {
+                const cat = card.getAttribute("data-category");
+                card.style.display = (category === "All" || cat === category) ? "flex" : "none";
+            });
+        }
+
+        function readBlog(title, text) {
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalText").innerText = text;
+            document.getElementById("blogModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("blogModal").style.display = "none";
+        }
+
+        function likeBlog(btn) {
+            btn.innerHTML = btn.innerHTML.includes("♥") ? "♡ 0" : "♥ 1";
+            btn.style.color = btn.innerHTML.includes("♥") ? "#dc2626" : "";
+        }
+
+        document.getElementById("blogFo
