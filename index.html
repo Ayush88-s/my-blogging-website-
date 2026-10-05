@@ -1,0 +1,136 @@
+DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYUSH BLOG | Stories & Ideas</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f7f3e8;color:#26352b;transition:.3s}
+nav{background:#173f35;color:white;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000}
+.logo{font-size:28px;font-weight:bold;letter-spacing:2px}.logo span{color:#d9b86c}
+nav ul{list-style:none;display:flex;gap:28px}nav a{color:white;text-decoration:none}nav a:hover{color:#d9b86c}
+.theme-btn{background:#d9b86c;border:0;padding:9px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
+.hero{min-height:500px;padding:80px 7%;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;background:linear-gradient(135deg,#173f35,#28604d);color:white}
+.hero-text small{color:#d9b86c;font-weight:bold;letter-spacing:3px}.hero h1{font-size:64px;line-height:1.05;margin:20px 0}
+.hero p{font-size:18px;line-height:1.7;color:#e2ebe4;max-width:600px}.hero-buttons{margin-top:30px}
+.btn{display:inline-block;padding:13px 23px;margin-right:10px;border-radius:30px;text-decoration:none;font-weight:bold;cursor:pointer;border:0}
+.btn-main{background:#d9b86c;color:#173f35}.btn-outline{border:1px solid white;color:white;background:transparent}
+.hero-card{background:#f7f3e8;color:#26352b;padding:30px;border-radius:25px;box-shadow:0 20px 50px #0004;transform:rotate(2deg)}
+.hero-card .icon{font-size:70px;margin-bottom:20px}.hero-card h2{margin-bottom:12px}.hero-card p{color:#657268;line-height:1.6}
+.container{width:86%;max-width:1200px;margin:auto}section{padding:70px 0}
+.section-title{text-align:center;margin-bottom:35px}.section-title h2{font-size:38px;color:#173f35}.section-title p{color:#68736d;margin-top:10px}
+.search-box{display:flex;max-width:650px;margin:0 auto 25px}.search-box input{flex:1;padding:15px 20px;border:2px solid #d8d1bd;border-radius:30px 0 0 30px;outline:0;background:white}.search-box button{padding:0 25px;border:0;background:#173f35;color:white;border-radius:0 30px 30px 0;cursor:pointer}
+.categories{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:45px}.category{padding:10px 20px;border-radius:25px;background:#e6dfca;border:0;cursor:pointer;color:#173f35;font-weight:bold}.category.active,.category:hover{background:#173f35;color:white}
+.featured{display:grid;grid-template-columns:1fr 1fr;background:#e8e2cf;border-radius:25px;overflow:hidden;margin-bottom:60px}.featured-image{min-height:320px;background:linear-gradient(135deg,#427c62,#d9b86c);display:flex;align-items:center;justify-content:center;font-size:110px}.featured-content{padding:45px}
+.tag{display:inline-block;background:#173f35;color:white;padding:6px 13px;border-radius:15px;font-size:12px;margin-bottom:15px}.featured-content h2{font-size:34px;margin-bottom:15px}.featured-content p{line-height:1.7;color:#5d685f}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.blog-card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 8px 25px #28322814;transition:.3s}.blog-card:hover{transform:translateY(-8px)}
+.blog-image{height:190px;display:flex;justify-content:center;align-items:center;font-size:65px;background:#dfe9df}.blog-content{padding:22px}.blog-content h3{font-size:21px;margin-bottom:10px}.blog-content p{color:#69736c;line-height:1.6;font-size:14px}
+.blog-meta{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:5px}.read-btn{background:#173f35;color:white;border:0;padding:9px 15px;border-radius:20px;cursor:pointer}.like-btn{border:0;background:transparent;cursor:pointer;font-size:17px}.delete-btn{background:#9b3d3d;color:white;border:0;padding:8px 12px;border-radius:15px;cursor:pointer;margin-left:5px}
+.create-section{background:#173f35;color:white}.form{max-width:700px;margin:auto;background:#245548;padding:35px;border-radius:22px}.form input,.form textarea,.form select{width:100%;padding:14px;margin-bottom:15px;border:0;border-radius:10px;outline:0}.form textarea{height:130px;resize:none}.form button{background:#d9b86c;color:#173f35;border:0;padding:13px 25px;border-radius:25px;font-weight:bold;cursor:pointer}
+footer{background:#102d26;color:#ccd7d0;text-align:center;padding:35px}footer h3{color:#d9b86c;margin-bottom:8px}
+.modal{display:none;position:fixed;inset:0;background:#000a;z-index:2000;align-items:center;justify-content:center;padding:20px}.modal-box{background:#f7f3e8;max-width:650px;width:100%;padding:35px;border-radius:20px;position:relative}.close{position:absolute;right:20px;top:15px;font-size:25px;cursor:pointer}.modal-box h2{color:#173f35;margin-bottom:15px}.modal-box p{line-height:1.8;color:#59655d}
+body.dark{background:#101814;color:#eee}body.dark .section-title h2{color:#d9b86c}body.dark .section-title p{color:#b7c0ba}body.dark .blog-card{background:#1a2520}body.dark .blog-content p{color:#b9c3bc}body.dark .search-box input{background:#1a2520;color:white;border-color:#35453c}body.dark .featured{background:#1a2520}body.dark .featured-content p{color:#b9c3bc}body.dark .category{background:#26352d;color:white}body.dark .modal-box{background:#1a2520}body.dark .modal-box h2{color:#d9b86c}body.dark .modal-box p{color:#c1c9c3}
+@media(max-width:900px){.hero{grid-template-columns:1fr;text-align:center}.hero h1{font-size:48px}.hero p{margin:auto}.featured{grid-template-columns:1fr}.blog-grid{grid-template-columns:repeat(2,1fr)}nav ul{gap:12px}}
+@media(max-width:600px){nav{flex-direction:column;gap:15px}nav ul{flex-wrap:wrap;justify-content:center}.hero{padding:60px 5%}.hero h1{font-size:40px}.blog-grid{grid-template-columns:1fr}.featured-content{padding:28px}.section-title h2{font-size:30px}.form{padding:22px}.blog-meta{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">AYUSH<span>.</span></div>
+<ul><li><a href="#home">Home</a></li><li><a href="#blogs">Blogs</a></li><li><a href="#create">Create</a></li><li><a href="#about">About</a></li></ul>
+<button class="theme-btn" onclick="toggleDark()">🌙 Theme</button>
+</nav>
+
+<section class="hero" id="home">
+<div class="hero-text">
+<small>AYUSH BLOG • STORIES & IDEAS</small>
+<h1>Think.<br>Write.<br>Share.</h1>
+<p>Welcome to Ayush Blog — a simple place to discover interesting stories, useful knowledge and creative ideas.</p>
+<div class="hero-buttons"><a href="#blogs" class="btn btn-main">Explore Blogs</a><a href="#create" class="btn btn-outline">Write Something</a></div>
+</div>
+<div class="hero-card"><div class="icon">🌿</div><h2>Today's Thought</h2><p>“Every great idea starts with a simple thought. Write it down, improve it and share it with the world.”</p></div>
+</section>
+
+<section id="blogs">
+<div class="container">
+<div class="section-title"><h2>Explore Stories</h2><p>Read something interesting today.</p></div>
+<div class="search-box"><input type="text" id="search" placeholder="Search blogs..." onkeyup="searchBlogs()"><button>Search</button></div>
+<div class="categories">
+<button class="category active" onclick="filterBlogs('All',this)">All</button>
+<button class="category" onclick="filterBlogs('Technology',this)">Technology</button>
+<button class="category" onclick="filterBlogs('Education',this)">Education</button>
+<button class="category" onclick="filterBlogs('Gaming',this)">Gaming</button>
+<button class="category" onclick="filterBlogs('Travel',this)">Travel</button>
+</div>
+
+<div class="featured">
+<div class="featured-image">💡</div>
+<div class="featured-content">
+<span class="tag">FEATURED</span><h2>The Power of Learning Something New</h2>
+<p>Learning is a continuous journey. Technology, education and creativity help us discover new possibilities and improve ourselves every day.</p><br>
+<button class="read-btn" onclick="openModal('The Power of Learning Something New','Learning is a continuous journey. Reading, practicing and exploring new ideas can help us develop better skills and understand the world around us.')">Read Story →</button>
+</div>
+</div>
+
+<div class="blog-grid" id="blogGrid">
+
+<article class="blog-card" data-category="Technology"><div class="blog-image">💻</div><div class="blog-content"><span class="tag">Technology</span><h3>How Technology Changes Our Life</h3><p>Technology has changed communication, education, business and everyday activities.</p><div class="blog-meta"><button class="read-btn" onclick="openModal('How Technology Changes Our Life','Technology has become an important part of modern life. Smartphones, computers, cloud services and artificial intelligence have changed the way people learn, work and communicate.')">Read More</button><div><button class="like-btn" onclick="likePost(this)">♡</button><button class="delete-btn" onclick="deletePost(this)">Delete</button></div></div></div></article>
+
+<article class="blog-card" data-category="Education"><div class="blog-image">📚</div><div class="blog-content"><span class="tag">Education</span><h3>Simple Ways to Study Better</h3><p>Good planning, regular practice and proper revision can make studying easier.</p><div class="blog-meta"><button class="read-btn" onclick="openModal('Simple Ways to Study Better','Create a simple study schedule, divide large topics into smaller parts, practice regularly and revise important points before exams.')">Read More</button><div><button class="like-btn" onclick="likePost(this)">♡</button><button class="delete-btn" onclick="deletePost(this)">Delete</button></div></div></div></article>
+
+<article class="blog-card" data-category="Gaming"><div class="blog-image">🎮</div><div class="blog-content"><span class="tag">Gaming</span><h3>Gaming and Modern Technology</h3><p>Modern games combine creativity, graphics, programming and interactive technology.</p><div class="blog-meta"><button class="read-btn" onclick="openModal('Gaming and Modern Technology','Modern gaming uses powerful graphics, physics engines, artificial intelligence and interactive design. Game development is also a great way to learn programming and creativity.')">Read More</button><div><button class="like-btn" onclick="likePost(this)">♡</button><button class="delete-btn" onclick="deletePost(this)">Delete</button></div></div></div></article>
+
+<article class="blog-card" data-category="Travel"><div class="blog-image">🌍</div><div class="blog-content"><span class="tag">Travel</span><h3>Why Travelling Is a Great Experience</h3><p>Travelling allows us to explore different places, cultures, people and experiences.</p><div class="blog-meta"><button class="read-btn" onclick="openModal('Why Travelling Is a Great Experience','Travelling gives us opportunities to see new places and understand different cultures. It can also create memorable experiences and new perspectives.')">Read More</button><div><button class="like-btn" onclick="likePost(this)">♡</button><button class="delete-btn" onclick="deletePost(this)">Delete</button></div></div></div></article>
+
+</div>
+</div>
+</section>
+
+<section class="create-section" id="create">
+<div class="container">
+<div class="section-title"><h2 style="color:#d9b86c">Create Your Blog</h2><p style="color:#d5ddd7">Have an idea? Write and publish it here.</p></div>
+<form class="form" onsubmit="addBlog(event)">
+<input type="text" id="blogTitle" placeholder="Blog Title" required>
+<select id="blogCategory" required><option value="">Select Category</option><option>Technology</option><option>Education</option><option>Gaming</option><option>Travel</option></select>
+<textarea id="blogDescription" placeholder="Write your blog..." required></textarea>
+<button type="submit">Publish Blog</button>
+</form>
+</div>
+</section>
+
+<section id="about"><div class="container"><div class="section-title"><h2>About Ayush Blog</h2><p>A simple blogging platform created using HTML, CSS and JavaScript.</p></div></div></section>
+
+<footer><h3>AYUSH BLOG</h3><p>Stories • Ideas • Knowledge</p><br><p>© 2026 Ayush Blog | All Rights Reserved</p></footer>
+
+<div class="modal" id="modal"><div class="modal-box"><span class="close" onclick="closeModal()">×</span><h2 id="modalTitle"></h2><p id="modalText"></p></div></div>
+
+<script>
+function toggleDark(){document.body.classList.toggle("dark")}
+function openModal(title,text){document.getElementById("modalTitle").innerText=title;document.getElementById("modalText").innerText=text;document.getElementById("modal").style.display="flex"}
+function closeModal(){document.getElementById("modal").style.display="none"}
+window.onclick=function(e){if(e.target===document.getElementById("modal"))closeModal()}
+function likePost(btn){btn.innerText=btn.innerText==="♡"?"♥":"♡"}
+function deletePost(btn){btn.closest(".blog-card").remove()}
+function searchBlogs(){
+let s=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".blog-card").forEach(card=>card.style.display=card.innerText.toLowerCase().includes(s)?"block":"none")
+}
+function filterBlogs(category,button){
+document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));button.classList.add("active");
+document.querySelectorAll(".blog-card").forEach(card=>card.style.display=(category==="All"||card.dataset.category===category)?"block":"none")
+}
+function addBlog(e){
+e.preventDefault();
+let title=document.getElementById("blogTitle").value,cat=document.getElementById("blogCategory").value,desc=document.getElementById("blogDescription").value;
+let card=document.createElement("article");card.className="blog-card";card.dataset.category=cat;
+let safeTitle=title.replace(/'/g,"\'"),safeDesc=desc.replace(/'/g,"\'");
+card.innerHTML=`<div class="blog-image">✍️</div><div class="blog-content"><span class="tag">${cat}</span><h3>${title}</h3><p>${desc}</p><div class="blog-meta"><button class="read-btn" onclick="openModal('${safeTitle}','${safeDesc}')">Read More</button><div><button class="like-btn" onclick="likePost(this)">♡</button><button class="delete-btn" onclick="deletePost(this)">Delete</button></div></div></div>`;
+document.getElementById("blogGrid").appendChild(card);
+document.getElementById("blogTitle").value="";document.getElementById("blogCategory").value="";document.getElementById("blogDescription").value="";
+alert("Blog published successfully!");document.getElementById("blogs").scrollIntoView({behavior:"smooth"})
+}
+</script>
+</body>
+</html>
